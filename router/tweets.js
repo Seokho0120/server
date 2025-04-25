@@ -1,5 +1,8 @@
 import express from "express";
 
+// 현재는 서버 메모리에 배열로 관리하고 있는거임
+// tweets는 DB 사용전 임시로 저장하고 있음, 실제로 이렇게 사용하면 매우 좋지 않음
+
 let tweets = [
   {
     id: "1",
@@ -25,7 +28,7 @@ const router = express.Router();
 router.get("/", (req, res, next) => {
   const username = req.query.username;
   const data = username
-    ? tweets.filter((t) => t.username === username)
+    ? tweets.filter((tweet) => tweet.username === username)
     : tweets;
   res.status(200).json(data);
 });
@@ -33,7 +36,7 @@ router.get("/", (req, res, next) => {
 // GET /tweets/:id
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
-  const tweet = tweets.find((t) => t.id === id);
+  const tweet = tweets.find((tweet) => tweet.id === id);
   if (tweet) {
     res.status(200).json(tweet);
   } else {
@@ -57,5 +60,23 @@ router.post("/", (req, res, next) => {
 });
 
 // PUT /tweets/:id
+router.put("/:id", (req, res, next) => {
+  const id = req.params.id;
+  const text = req.body.text;
+  const tweet = tweets.find((tweet) => tweet.id === id);
+
+  if (tweet) {
+    tweet.text = text;
+    res.status(200).json(tweet);
+  } else {
+    res.status(404).json({ message: `Tweet id(${id}) not found` });
+  }
+});
+
 // DELETE /tweets/:id
+router.delete("/:id", (req, res, next) => {
+  const id = req.params.id;
+  tweets = tweets.filter((tweet) => tweet.id !== id);
+  res.sendStatus(204);
+});
 export default router;

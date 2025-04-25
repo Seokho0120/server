@@ -9,6 +9,13 @@ const tweets = [
     username: "seokori",
     url: "https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-1.png",
   },
+  {
+    id: "2",
+    text: "하이!",
+    createdAt: Date.now().toString(),
+    name: "Bob",
+    username: "bob",
+  },
 ];
 
 const router = express.Router();
@@ -24,6 +31,16 @@ router.get("/", (req, res, next) => {
 });
 
 // GET /tweets/:id
+router.get("/:id", (req, res, next) => {
+  const id = req.params.id;
+  const tweet = tweets.find((t) => t.id === id);
+  if (tweet) {
+    res.status(200).json(tweet);
+  } else {
+    res.status(404).json({ message: `Tweet id(${id}) not found` });
+    // res.sendStatus(404);
+  }
+});
 // POST /tweets/:id
 // PUT /tweets/:id
 // DELETE /tweets/:id

@@ -1,6 +1,5 @@
+// Controller는 비지니스 logic만
 import * as tweetRepository from "../data/tweet.js";
-
-// Controller는 logic
 
 export async function getTweets(req, res) {
   const username = req.query.username;

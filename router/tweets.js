@@ -7,7 +7,7 @@ const router = express.Router();
 
 // GET /tweets
 // GET /tweets?username=:username
-router.get("/", tweetController.getTweets); // 함수 실행이 아니라 연결만하는거라서 getTweets형태임, getTweets() x
+router.get("/", tweetController.getTweets);
 
 // GET /tweets/:id
 router.get("/:id", tweetController.getTweet);

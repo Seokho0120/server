@@ -1,3 +1,5 @@
+// Data는 data
+
 let tweets = [
   {
     id: "1",

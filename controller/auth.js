@@ -6,8 +6,6 @@ const jwtSecretKey = "a3d4595afbd6beb421c7902f40ed1540";
 const jwtExpiresInDays = "2d"; // 만료일
 const bcryptSaltRounds = 12;
 
-// bcrypt.hash("abcd1234", 12).then(console.log);
-
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
   const found = await userRepository.findByUsername(username);
@@ -38,7 +36,6 @@ export async function login(req, res) {
   // DB에 저장된 해싱된 비밀번호와 사용자 입력 비밀번호 비교
   // bcrypt.compare는 비밀번호가 일치하면 true, 일치하지 않으면 false를 반환
   const isValidPassword = await bcrypt.compare(password, user.password);
-  console.log("isValidPassword", isValidPassword);
   if (!isValidPassword) {
     return res.status(401).json({ message: "Invalid user or password" });
   }

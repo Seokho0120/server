@@ -6,7 +6,7 @@ let users = [
     password: "$2b$12$eFJz4QzmTLujYOodXiMtV.KCGhr6l0Fq0dOTzr0KSmeH9pcE8OS1e",
     name: "Bob",
     email: "bob@gmail.com",
-    url: "https://bob.com",
+    url: "https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-1.png",
   },
 ];
 

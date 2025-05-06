@@ -5,7 +5,7 @@ const AUTH_ERROR = { message: "Authorization Error" };
 
 export async function isAuth(req, res, next) {
   const authHeader = req.get("Authorization");
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!(authHeader && authHeader.startsWith("Bearer "))) {
     return res.status(401).json(AUTH_ERROR);
   }
 

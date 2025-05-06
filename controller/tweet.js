@@ -19,11 +19,17 @@ export async function getTweet(req, res) {
   }
 }
 
-export async function createTweet(req, res) {
-  const { text, name, username } = req.body;
-  const tweet = await tweetRepository.create(text, name, username);
+export async function createTweet(req, res, next) {
+  const { text } = req.body;
+  const tweet = await tweetRepository.create(text, req.userId);
   res.status(201).json(tweet);
 }
+
+// export async function createTweet(req, res) {
+//   const { text, name, username } = req.body;
+//   const tweet = await tweetRepository.create(text, name, username);
+//   res.status(201).json(tweet);
+// }
 
 export async function updateTweet(req, res) {
   const id = req.params.id;

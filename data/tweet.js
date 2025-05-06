@@ -5,13 +5,13 @@ import * as userRepository from "./auth.js";
 let tweets = [
   {
     id: "1",
-    text: "첫번쨰 트윗",
+    text: "드림코더분들 화이팅!",
     createdAt: new Date().toString(),
     userId: "1",
   },
   {
     id: "2",
-    text: "하이!",
+    text: "안뇽!",
     createdAt: new Date().toString(),
     userId: "1",
   },
@@ -23,6 +23,7 @@ export async function getAll() {
       const { username, name, url } = await userRepository.findById(
         tweet.userId
       );
+
       return {
         ...tweet,
         username,
@@ -45,13 +46,7 @@ export async function getById(id) {
     return null;
   }
   const { username, name, url } = await userRepository.findById(found.userId);
-
-  return {
-    ...found,
-    username,
-    name,
-    url,
-  };
+  return { ...found, username, name, url };
 }
 
 export async function create(text, userId) {

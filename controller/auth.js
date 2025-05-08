@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import * as userRepository from "../data/auth.js";
 
 const jwtSecretKey = "a3d4595afbd6beb421c7902f40ed1540";
+// const jwtExpiresInDays = 3; // 만료일
 const jwtExpiresInDays = "2d"; // 만료일
 const bcryptSaltRounds = 12;
 

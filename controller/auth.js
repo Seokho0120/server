@@ -1,11 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import * as userRepository from "../data/auth.js";
-
-const jwtSecretKey = "a3d4595afbd6beb421c7902f40ed1540";
-// const jwtExpiresInDays = 3; // 만료일
-const jwtExpiresInDays = "2d"; // 만료일
-const bcryptSaltRounds = 12;
+import { config } from "../config.js";
 
 export async function signup(req, res) {
   const { username, password, name, email, url } = req.body;
@@ -15,7 +11,7 @@ export async function signup(req, res) {
   }
 
   // 새로운 사용자 생성
-  const hashed = await bcrypt.hash(password, bcryptSaltRounds); // 비밀번호 해싱
+  const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds); // 비밀번호 해싱
   const userId = await userRepository.createUser({
     username,
     password: hashed,
@@ -46,7 +42,9 @@ export async function login(req, res) {
 }
 
 function createJwtToken(id) {
-  return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpiresInDays });
+  return jwt.sign({ id }, config.jwt.secretKey, {
+    expiresIn: config.jwt.expiresInSec,
+  });
 }
 
 export async function me(req, res) {

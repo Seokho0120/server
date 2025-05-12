@@ -1,32 +1,27 @@
-// abcd1234: $2b$12$0v1x5j4z3Q6Z5Y8g7G9c1OaXk5J6e4q3F5Z5e5e5e5e5e5e5e5e5e
-let users = [
-  {
-    id: "1",
-    username: "bob",
-    password: "$2b$12$eFJz4QzmTLujYOodXiMtV.KCGhr6l0Fq0dOTzr0KSmeH9pcE8OS1e",
-    name: "Bob",
-    email: "bob@gmail.com",
-    url: "https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-1.png",
-  },
-  // {
-  //   id: "2",
-  //   username: "ellie",
-  //   password: "$2b$12$eFJz4QzmTLujYOodXiMtV.KCGhr6l0Fq0dOTzr0KSmeH9pcE8OS1e",
-  //   name: "Ellie",
-  //   email: "ellie@gmail.com",
-  // },
-];
+import { db } from "../db/database.js";
 
 export async function findByUsername(username) {
-  return users.find((user) => user.username === username);
+  return db
+    .execute("SELECT * FROM users WHERE username = ?", [username]) // WHERE은 SQL문에서 조건을 지정하는 부분
+    .then((result) => {
+      return result[0][0];
+    });
 }
 
 export async function findById(id) {
-  return users.find((user) => user.id === id);
+  return db.execute("SELECT * FROM users WHERE id = ?", [id]).then((result) => {
+    return result[0][0];
+  });
 }
 
 export async function createUser(user) {
-  const created = { ...user, id: Date.now().toString() };
-  users.push(created);
-  return created.id;
+  const { username, password, name, email, url } = user;
+  return db
+    .execute(
+      "INSERT INTO users (username, password, name, email, url) VALUES (? ,? ,? ,? ,?)",
+      [username, password, name, email, url]
+    )
+    .then((result) => {
+      return result[0].insertId;
+    });
 }

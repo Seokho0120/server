@@ -5,14 +5,15 @@ import SQ from "sequelize";
 const { host, user, database, password } = config.db;
 export const sequelize = new SQ.Sequelize(database, user, password, {
   host,
-  dialect: "mysql",
+  dialect: "mysql", // 어떤 데이터베이스를 사용할 것인지
 });
 
+// 예전꺼, 삭제 예정
 const pool = mysql.createPool({
-  host: config.db.host,
-  user: config.db.user,
-  database: config.db.database,
-  password: config.db.password,
+  host,
+  user,
+  database,
+  password,
 });
 
 export const db = pool.promise();

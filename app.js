@@ -29,7 +29,7 @@ app.use((error, req, res, next) => {
 
 db.getConnection();
 sequelize.sync().then((client) => {
-  console.log("client >>>>>>>", client);
+  // console.log("client >>>>>>>", client);
+  const server = app.listen(config.host.port);
+  initSocket(server);
 });
-const server = app.listen(config.host.port);
-initSocket(server);
